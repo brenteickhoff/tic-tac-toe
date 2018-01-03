@@ -946,7 +946,7 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactDom = __webpack_require__(18);
 
-var _App = __webpack_require__(27);
+var _App = __webpack_require__(28);
 
 var _App2 = _interopRequireDefault(_App);
 
@@ -18263,7 +18263,79 @@ function camelize(string) {
 module.exports = camelize;
 
 /***/ }),
-/* 27 */
+/* 27 */,
+/* 28 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(2);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _Game = __webpack_require__(43);
+
+var _Game2 = _interopRequireDefault(_Game);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+// import from 'bootstrap';
+
+
+var App = function (_Component) {
+  _inherits(App, _Component);
+
+  function App() {
+    _classCallCheck(this, App);
+
+    return _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).apply(this, arguments));
+  }
+
+  _createClass(App, [{
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        null,
+        'Tic Tac Toe',
+        _react2.default.createElement(_Game2.default, null)
+      );
+    }
+  }]);
+
+  return App;
+}(_react.Component);
+
+exports.default = App;
+
+/***/ }),
+/* 29 */,
+/* 30 */,
+/* 31 */,
+/* 32 */,
+/* 33 */,
+/* 34 */,
+/* 35 */,
+/* 36 */,
+/* 37 */,
+/* 38 */,
+/* 39 */,
+/* 40 */,
+/* 41 */,
+/* 42 */,
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18287,30 +18359,242 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var App = function (_Component) {
-  _inherits(App, _Component);
+var Game = function (_Component) {
+  _inherits(Game, _Component);
 
-  function App() {
-    _classCallCheck(this, App);
+  function Game(props) {
+    _classCallCheck(this, Game);
 
-    return _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, (Game.__proto__ || Object.getPrototypeOf(Game)).call(this, props));
+
+    _this.state = {
+      gameOver: false,
+      turn: 'X',
+      board: [['~', '~', '~'], ['~', '~', '~'], ['~', '~', '~']]
+    };
+    return _this;
   }
 
-  _createClass(App, [{
+  _createClass(Game, [{
+    key: 'reset',
+    value: function reset() {
+      this.setState({ board: [['~', '~', '~'], ['~', '~', '~'], ['~', '~', '~']] });
+      this.setState({ gameOver: false });
+    }
+  }, {
+    key: 'gameIsOver',
+    value: function gameIsOver() {
+
+      var cell = this.state.board;
+      console.log(cell);
+      for (var i = 0; i < 3; i++) {
+        if (cell[i][0] === cell[i][1] && cell[i][1] === cell[i][2] && cell[i][1] !== '~') {
+          return true;
+        }
+        if (cell[0][i] === cell[1][i] && cell[1][i] === cell[2][i] && cell[2][i] !== '~') {
+          return true;
+        }
+      }
+      if (cell[0][0] === cell[1][1] && cell[1][1] === cell[2][2] && cell[2][2] !== '~') {
+        return true;
+      }
+      if (cell[0][2] === cell[1][1] && cell[1][1] === cell[2][0] && cell[2][0] !== '~') {
+        return true;
+      }
+    }
+  }, {
+    key: 'clickHandler',
+    value: function clickHandler(e) {
+      if (e.target.id === 'winner') {
+        this.reset();
+      } else if (this.state.gameOver === false) {
+        var row = e.target.id.split('')[0];
+        var col = e.target.id.split('')[1];
+        if (this.state.board[row][col] === '~') {
+          this.state.board[row][col] = this.state.turn;
+          this.setState({ turn: this.state.turn === 'X' ? 'O' : 'X' });
+        }
+        if (this.gameIsOver()) {
+          this.setState({ gameOver: true });
+        }
+      }
+    }
+  }, {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
         'div',
         null,
-        'Hello From React'
+        _react2.default.createElement(
+          'h2',
+          null,
+          'Player Turn ',
+          _react2.default.createElement(
+            'button',
+            null,
+            _react2.default.createElement(
+              'h2',
+              null,
+              this.state.turn
+            )
+          )
+        ),
+        _react2.default.createElement(
+          'table',
+          null,
+          _react2.default.createElement(
+            'tbody',
+            null,
+            _react2.default.createElement(
+              'tr',
+              null,
+              _react2.default.createElement(
+                'td',
+                null,
+                _react2.default.createElement(
+                  'button',
+                  { id: '00', onClick: this.clickHandler.bind(this) },
+                  _react2.default.createElement(
+                    'h2',
+                    { id: '00' },
+                    this.state.board[0][0]
+                  )
+                )
+              ),
+              _react2.default.createElement(
+                'td',
+                null,
+                _react2.default.createElement(
+                  'button',
+                  { id: '01', onClick: this.clickHandler.bind(this) },
+                  _react2.default.createElement(
+                    'h2',
+                    { id: '01' },
+                    this.state.board[0][1]
+                  )
+                )
+              ),
+              _react2.default.createElement(
+                'td',
+                null,
+                _react2.default.createElement(
+                  'button',
+                  { id: '02', onClick: this.clickHandler.bind(this) },
+                  _react2.default.createElement(
+                    'h2',
+                    { id: '02' },
+                    this.state.board[0][2]
+                  )
+                )
+              )
+            ),
+            _react2.default.createElement(
+              'tr',
+              null,
+              _react2.default.createElement(
+                'td',
+                null,
+                _react2.default.createElement(
+                  'button',
+                  { id: '10', onClick: this.clickHandler.bind(this) },
+                  _react2.default.createElement(
+                    'h2',
+                    { id: '10' },
+                    this.state.board[1][0]
+                  )
+                )
+              ),
+              _react2.default.createElement(
+                'td',
+                null,
+                _react2.default.createElement(
+                  'button',
+                  { id: '11', onClick: this.clickHandler.bind(this) },
+                  _react2.default.createElement(
+                    'h2',
+                    { id: '11' },
+                    this.state.board[1][1]
+                  )
+                )
+              ),
+              _react2.default.createElement(
+                'td',
+                null,
+                _react2.default.createElement(
+                  'button',
+                  { id: '12', onClick: this.clickHandler.bind(this) },
+                  _react2.default.createElement(
+                    'h2',
+                    { id: '12' },
+                    this.state.board[1][2]
+                  )
+                )
+              )
+            ),
+            _react2.default.createElement(
+              'tr',
+              null,
+              _react2.default.createElement(
+                'td',
+                null,
+                _react2.default.createElement(
+                  'button',
+                  { id: '20', onClick: this.clickHandler.bind(this) },
+                  _react2.default.createElement(
+                    'h2',
+                    { id: '20' },
+                    this.state.board[2][0]
+                  )
+                )
+              ),
+              _react2.default.createElement(
+                'td',
+                null,
+                _react2.default.createElement(
+                  'button',
+                  { id: '21', onClick: this.clickHandler.bind(this) },
+                  _react2.default.createElement(
+                    'h2',
+                    { id: '21' },
+                    this.state.board[2][1]
+                  )
+                )
+              ),
+              _react2.default.createElement(
+                'td',
+                null,
+                _react2.default.createElement(
+                  'button',
+                  { id: '22', onClick: this.clickHandler.bind(this) },
+                  _react2.default.createElement(
+                    'h2',
+                    { id: '22' },
+                    this.state.board[2][2]
+                  )
+                )
+              )
+            )
+          )
+        ),
+        this.state.gameOver === true ? _react2.default.createElement(
+          'button',
+          null,
+          _react2.default.createElement(
+            'h2',
+            { id: 'winner', onClick: this.clickHandler.bind(this) },
+            'Play again!'
+          )
+        ) : null
       );
     }
   }]);
 
-  return App;
+  return Game;
 }(_react.Component);
 
-exports.default = App;
+;
+
+exports.default = Game;
 
 /***/ })
 /******/ ]);
