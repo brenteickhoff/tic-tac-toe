@@ -4,6 +4,7 @@ class Game extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      winnder: null,
       gameOver: false,
       turn: 'X',
       board: [
@@ -23,21 +24,24 @@ class Game extends Component {
     this.setState({gameOver: false});
   }
   gameIsOver () {
-
     let cell = this.state.board;
     console.log(cell)
     for (let i = 0; i < 3; i++) {
       if (cell[i][0] === cell[i][1] && cell[i][1] === cell[i][2] && cell[i][1] !== '~') {
+        this.setState({winner: cell[i][0]});
         return true;
       }
       if (cell[0][i] === cell[1][i] && cell[1][i] === cell[2][i] && cell[2][i] !== '~') {
+        this.setState({winner: cell[0][i]});
         return true;
       }
     }
     if (cell[0][0] === cell[1][1] && cell[1][1] === cell[2][2] && cell[2][2] !== '~') {
+      this.setState({winner: cell[1][1]});
       return true;
     }
     if (cell[0][2] === cell[1][1] && cell[1][1] === cell[2][0] && cell[2][0] !== '~') {
+      this.setState({winner: cell[1][1]});
       return true;
     }
   }
@@ -116,7 +120,7 @@ class Game extends Component {
             </tr>
           </tbody>
         </table>
-        {this.state.gameOver === true ? <button><h2 id="winner" onClick={ this.clickHandler.bind(this) }>Play again!</h2></button> : null}
+        {this.state.gameOver === true ? <button><h2 id="winner" onClick={ this.clickHandler.bind(this) }>Winnder is {this.state.winner}. Play again!</h2></button> : null}
       </div>
     );
 

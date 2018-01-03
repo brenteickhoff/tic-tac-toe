@@ -18368,6 +18368,7 @@ var Game = function (_Component) {
     var _this = _possibleConstructorReturn(this, (Game.__proto__ || Object.getPrototypeOf(Game)).call(this, props));
 
     _this.state = {
+      winnder: null,
       gameOver: false,
       turn: 'X',
       board: [['~', '~', '~'], ['~', '~', '~'], ['~', '~', '~']]
@@ -18384,21 +18385,24 @@ var Game = function (_Component) {
   }, {
     key: 'gameIsOver',
     value: function gameIsOver() {
-
       var cell = this.state.board;
       console.log(cell);
       for (var i = 0; i < 3; i++) {
         if (cell[i][0] === cell[i][1] && cell[i][1] === cell[i][2] && cell[i][1] !== '~') {
+          this.setState({ winner: cell[i][0] });
           return true;
         }
         if (cell[0][i] === cell[1][i] && cell[1][i] === cell[2][i] && cell[2][i] !== '~') {
+          this.setState({ winner: cell[0][i] });
           return true;
         }
       }
       if (cell[0][0] === cell[1][1] && cell[1][1] === cell[2][2] && cell[2][2] !== '~') {
+        this.setState({ winner: cell[1][1] });
         return true;
       }
       if (cell[0][2] === cell[1][1] && cell[1][1] === cell[2][0] && cell[2][0] !== '~') {
+        this.setState({ winner: cell[1][1] });
         return true;
       }
     }
@@ -18582,7 +18586,9 @@ var Game = function (_Component) {
           _react2.default.createElement(
             'h2',
             { id: 'winner', onClick: this.clickHandler.bind(this) },
-            'Play again!'
+            'Winnder is ',
+            this.state.winner,
+            '. Play again!'
           )
         ) : null
       );
