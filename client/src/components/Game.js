@@ -4,7 +4,7 @@ class Game extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      winnder: null,
+      winner: null,
       gameOver: false,
       turn: 'X',
       board: [
@@ -120,7 +120,7 @@ class Game extends Component {
             </tr>
           </tbody>
         </table>
-        {this.state.gameOver === true ? <button><h2 id="winner" onClick={ this.clickHandler.bind(this) }>Winnder is {this.state.winner}. Play again!</h2></button> : null}
+        {this.state.gameOver === true ? <button><h2 id="winner" onClick={ this.clickHandler.bind(this) }>Winner is {this.state.winner}. Play again!</h2></button> : null}
       </div>
     );
 

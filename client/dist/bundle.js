@@ -18368,7 +18368,7 @@ var Game = function (_Component) {
     var _this = _possibleConstructorReturn(this, (Game.__proto__ || Object.getPrototypeOf(Game)).call(this, props));
 
     _this.state = {
-      winnder: null,
+      winner: null,
       gameOver: false,
       turn: 'X',
       board: [['~', '~', '~'], ['~', '~', '~'], ['~', '~', '~']]
@@ -18586,7 +18586,7 @@ var Game = function (_Component) {
           _react2.default.createElement(
             'h2',
             { id: 'winner', onClick: this.clickHandler.bind(this) },
-            'Winnder is ',
+            'Winner is ',
             this.state.winner,
             '. Play again!'
           )
